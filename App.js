@@ -17,7 +17,6 @@ function App() {
     // 새로 등록할 항목의 id를 구합니다.
     // 등록된 항목 중에서 가장 큰 id를 구하고, 그 값에 1을 더합니다.
     // 만약 리스트가 비어있다면 1을 id로 사용합니다.
-    console.log('test===>', Math.max(...todos.map(todo => todo.id)) + 1);
     const nextId =
       todos.length > 0 ? Math.max(...todos.map(todo => todo.id)) + 1 : 1;
     const todo = {
@@ -36,6 +35,12 @@ function App() {
     setTodos(nextTodos);
   };
 
+  const onRemove = id => {
+    const nextTodos = todos.filter(todo => todo.id !== id);
+    console.log(nextTodos);
+    setTodos(nextTodos);
+  };
+
   return (
     <SafeAreaProvider>
       <SafeAreaView edges={['bottom']} style={styles.block}>
@@ -44,7 +49,7 @@ function App() {
           style={styles.avoid}>
           <DateHead />
           {todos.length > 1 ? (
-            <TodoList todos={todos} onToggle={onToggle} />
+            <TodoList todos={todos} onToggle={onToggle} onRemove={onRemove} />
           ) : (
             <Empty />
           )}
